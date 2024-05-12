@@ -23,7 +23,7 @@ exports.createProduct = asyncWrapper(async (req, res) => {
     while (images.length > 0) {
       imageChunks.push(images.splice(0, chunkSize));
     }
-
+                                   
 
     // Upload images in separate requests. for loop will run 3 times if there are 9 images to upload each time uploading 3 images at a time
     for (let chunk of imageChunks) {
@@ -107,24 +107,30 @@ exports.updateProduct = asyncWrapper(async (req, res, next) => {
   }
 
   let images = [];
-
+   console.log(req.body.images , "req.body.images")
   if (typeof req.body.images === "string") {
     images.push(req.body.images);
   } else {
     images = req.body.images;
   }
+  console.log(images , "images")
 
   if (images !== undefined) {
     // Deleting Images From Cloudinary
     for (let i = 0; i < product.images.length; i++) {
+      console.log("delete image" , i) 
       await cloudinary.v2.uploader.destroy(product.images[i].product_id);
     }
+    console.log("deleted" ) 
+
 
     const imagesLinks = [];
     for (let img of images) {
       const result = await cloudinary.v2.uploader.upload(img, {
         folder: "Products",
       });
+
+      console.log(result , "result")
 
       imagesLinks.push({
         product_id: result.public_id,

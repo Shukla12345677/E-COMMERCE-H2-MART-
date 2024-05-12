@@ -63,6 +63,7 @@ function App() {
   async function getStripeApiKey() {
     try {
       const { data } = await axios.get("/api/v1/stripeapikey");
+      console.log("stripe key" , data)
       if (
         data.stripeApiKey !== undefined &&
         data.stripeApiKey !== null &&
@@ -70,10 +71,11 @@ function App() {
       ) {
         sessionStorage.setItem(
           "stripeApiKey",
-          JSON.stringify(data.stripeApiKey)
+          JSON.stringify(sk_test_51PFCQLSESLLilDPXU0KjbDJ2PJBAlCw2mHJQtbxUPRJRn6fZwaGtW2W3xhxqolOJMBo7nIYs7zFMZz95gm4GdY9a00wF1oiqgK)
         );
       }
-      setStripeApiKey(data.stripeApiKey);
+      // setStripeApiKey(sk_test_51PFCQLSESLLilDPXU0KjbDJ2PJBAlCw2mHJQtbxUPRJRn6fZwaGtW2W3xhxqolOJMBo7nIYs7zFMZz95gm4GdY9a00wF1oiqgK);
+      setStripeApiKey(sk_test_51PFCQLSESLLilDPXU0KjbDJ2PJBAlCw2mHJQtbxUPRJRn6fZwaGtW2W3xhxqolOJMBo7nIYs7zFMZz95gm4GdY9a00wF1oiqgK);
     } catch (error) {
       // Handle error if the API call fails
       console.error("Error fetching Stripe API key:", error);
@@ -83,7 +85,7 @@ function App() {
   useEffect(() => {
     const stripeApiKey = sessionStorage.getItem("stripeApiKey");
     if (stripeApiKey) {
-      setStripeApiKey(stripeApiKey);
+      setStripeApiKey("sk_test_51PFCQLSESLLilDPXU0KjbDJ2PJBAlCw2mHJQtbxUPRJRn6fZwaGtW2W3xhxqolOJMBo7nIYs7zFMZz95gm4GdY9a00wF1oiqgK");
     } else {
       getStripeApiKey();
     }
@@ -458,7 +460,7 @@ function App() {
           </Switch>
         </Suspense>
 
-        <Elements stripe={loadStripe(stripeApiKey)}>
+        <Elements stripe={loadStripe("pk_test_51PFCQLSESLLilDPXsDMxEZ9EfIW9ZVJ5VxnsPbX07XhmQnIVUfndjtJTfgF0d5fek13nvwyZcYmsdpb4eHXJ8xmZ00B4PyROEt")}>
           <Route exact path="/process/payment">
             {<Header />}
             <PrivateRoute exact path="/process/payment" component={Payment} />
